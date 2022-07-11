@@ -1,11 +1,28 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+
+const keys = require("./config/keys");
+require("./models/user");
 require("./services/passport");
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-require("./routes/authRoutes")(
-  app
-); /* we require the function from authRoutes file,
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./routes/authRoutes")(app);
+/* we require the function from authRoutes file,
 and invoked it in the same time */
 
 const PORT = process.env.PORT || 5000; /* In many environments (e.g. Heroku),
