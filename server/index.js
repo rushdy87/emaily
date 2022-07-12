@@ -20,6 +20,10 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+/*
+ * app.use(middleware), meddleware is a small function that can used to modify 
+incoming requset to our app befor they sent off to rout handlers.
+ */
 
 require("./routes/authRoutes")(app);
 /* we require the function from authRoutes file,
