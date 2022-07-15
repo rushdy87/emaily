@@ -1,15 +1,38 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const Header = () => {
+  const auth = useSelector((state) => state.auth);
+
+  const renderContent = () => {
+    switch (auth) {
+      case null:
+        return (
+          <div className="progress">
+            <div className="indeterminate"></div>
+          </div>
+        );
+      case false:
+        return (
+          <li>
+            <a href="/auth/google">Login With Google</a>
+          </li>
+        );
+      default:
+        return (
+          <li>
+            <a href="/api/logout">Logout</a>
+          </li>
+        );
+    }
+  };
   return (
     <nav>
       <div className="nav-wrapper">
-        <a href="#" className="left brand-logo">
+        <Link to={auth ? "/surveys" : "/"} className="left brand-logo">
           Emaily
-        </a>
-        <ul className="right">
-          <li>
-            <a href="sass.html">Login with Google</a>
-          </li>
-        </ul>
+        </Link>
+        <ul className="right">{renderContent()}</ul>
       </div>
     </nav>
   );
