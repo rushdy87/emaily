@@ -11,6 +11,8 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
+app.use(express.json()); // instead of app.use(bodyparser.json());
+
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -20,14 +22,12 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-/*
- * app.use(middleware), meddleware is a small function that can used to modify 
-incoming requset to our app befor they sent off to rout handlers.
- */
+/* app.use(middleware), meddleware is a small function that can used to modify 
+incoming requset to our app befor they sent off to rout handlers. */
 
 require("./routes/authRoutes")(app);
-/* we require the function from authRoutes file,
-and invoked it in the same time */
+/* we require the function from authRoutes file, and invoked it in the same time */
+require("./routes/billingRoutes")(app);
 
 const PORT = process.env.PORT || 5000; /* In many environments (e.g. Heroku),
 and as a convention, you can set the environment variable PORT to tell your
