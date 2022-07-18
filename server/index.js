@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const keys = require("./config/keys");
 require("./models/user");
+require("./models/survey");
 require("./services/passport");
 
 mongoose.connect(keys.mongoURI);
@@ -28,6 +29,7 @@ incoming requset to our app befor they sent off to rout handlers. */
 require("./routes/authRoutes")(app);
 /* we require the function from authRoutes file, and invoked it in the same time */
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 // start: the code at the bottom work in the production environment
 if (process.env.NODE_ENV === "production") {
