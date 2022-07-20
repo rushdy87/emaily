@@ -7,6 +7,10 @@ import "materialize-css/dist/css/materialize.min.css";
 import App from "./App";
 import store from "./store/store";
 
+//Development only axios helpers:
+import axios from "axios";
+window.axios = axios;
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
