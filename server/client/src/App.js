@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/header/Header";
 import Landing from "./components/landing/Landing";
+import Dashbord from "./components/dashbord/Dashbord";
+import SurveyNew from "./components/surveys/SurveyNew";
 import { fetchUser } from "./store/auth/authAction";
 
 function App() {
@@ -18,8 +20,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/survey" element={<h2>SurveyNew</h2>} />
-          <Route path="/surveys" element={<h2>Dashbord</h2>} />
+          <Route path="/surveys/new" element={<SurveyNew />} />
+          <Route path="/surveys" element={<Dashbord />} />
         </Routes>
       </Router>
     </div>
