@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { reduxForm, Field } from "redux-form";
 
 import SurveyField from "../survey-field/SurveyField";
+import { validateEmails } from "../../../utils/validateEmal";
 
 const FIELDS = [
   {
@@ -45,6 +46,34 @@ const SurveyForm = (props) => {
   );
 };
 
+const validate = (values) => {
+  const errors = {};
+
+  errors.emails = validateEmails(values.emails || "");
+
+  FIELDS.forEach(({ name }) => {
+    if (!values[name]) {
+      errors[name] = `You must provide a ${name}.`;
+    }
+  });
+  return errors;
+};
+
 export default reduxForm({
+  validate,
   form: "surveyForm",
 })(SurveyForm);
+
+/*
+the flow of validate:
+1- in validate function:
+  if errors object is empty that mean there is no error.
+  if errors has a proprty, that mean there is an error in Field component that have the same name with errors.proprty.
+2- reduxForm add an error proprty to the the Field component as props:
+  if there is a key in errors object (in validate function), take its value in error prop.
+  else error will be undifine 
+3- in the SurveyField check:
+  if error prop is undifine that mean every think is Ok.
+  if There is a value in the error prop, then show the value of it.
+
+ */

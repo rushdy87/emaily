@@ -1,0 +1,15 @@
+.survey-field-container {
+    margin: 15px;
+}
+.survey-field-container label {
+    color: teal;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+    width: 150px;
+    float: left;
+    }
+
+.survey-field-validate {
+    margin-bottom: 20px;
+}
