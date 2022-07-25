@@ -3,25 +3,7 @@ import { reduxForm, Field } from "redux-form";
 
 import SurveyField from "../survey-field/SurveyField";
 import { validateEmails } from "../../../utils/validateEmal";
-
-const FIELDS = [
-  {
-    name: "title",
-    label: "Survey Title",
-  },
-  {
-    name: "subject",
-    label: "Subject Line",
-  },
-  {
-    name: "body",
-    label: "Email Body",
-  },
-  {
-    name: "emails",
-    label: "Recipient List",
-  },
-];
+import { FIELDS } from "../formFields";
 
 const SurveyForm = (props) => {
   const renderFields = () =>
@@ -31,7 +13,7 @@ const SurveyForm = (props) => {
 
   return (
     <div>
-      <form onSubmit={props.handleSubmit((value) => console.log(value))}>
+      <form onSubmit={props.handleSubmit(props.onSurveySubmit)}>
         {renderFields()}
         <Link to="/surveys" className="red btn-flat white-text">
           Cancel
@@ -49,7 +31,7 @@ const SurveyForm = (props) => {
 const validate = (values) => {
   const errors = {};
 
-  errors.emails = validateEmails(values.emails || "");
+  errors.recipients = validateEmails(values.recipients || "");
 
   FIELDS.forEach(({ name }) => {
     if (!values[name]) {
@@ -62,6 +44,7 @@ const validate = (values) => {
 export default reduxForm({
   validate,
   form: "surveyForm",
+  destroyOnUnmount: false,
 })(SurveyForm);
 
 /*
