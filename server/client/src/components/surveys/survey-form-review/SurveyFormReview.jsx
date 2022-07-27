@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { FIELDS } from "../formFields";
-import { submitSurvey } from "../../../store/survey/surveyAction";
+import { submitSurvey } from "../../../store/survey/surveysAction";
 
 const SurveyFormReview = ({ onCancel }) => {
   const formValues = useSelector((state) => state.form.surveyForm.values);

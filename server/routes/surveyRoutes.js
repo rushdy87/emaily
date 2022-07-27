@@ -10,11 +10,22 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = mongoose.model("surveys");
 
 module.exports = (app) => {
+  app.get("/api/surveys", async (req, res) => {
+    try {
+      const surveys = await Survey.find({ _user: req.user.id }).select({
+        recipients: false,
+      });
+      res.send(surveys);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  });
+
   app.get("/api/surveys/:surveyId/:choice", (req, res) => {
     res.send("Thanks for Voting!");
   });
 
-  app.post("/api/surveys/webhooks", (req, res) => {
+  app.post("/api/surveys/webhooks", requireLogin, (req, res) => {
     const p = new Path("/api/surveys/:surveyId/:choice");
 
     _.chain(req.body)
